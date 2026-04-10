@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>工作進度報告 | 股東大會 2026-04-10</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; background: #0f1117; color: #e2e8f0; }
+
+  .cover {
+    min-height: 100vh; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; text-align: center;
+    background: linear-gradient(135deg, #1a1f2e 0%, #0f1117 50%, #1a1025 100%);
+    border-bottom: 1px solid #2d3748; padding: 40px;
+  }
+  .cover-badge { background: #6c63ff22; border: 1px solid #6c63ff44; color: #a78bfa; padding: 6px 18px; border-radius: 20px; font-size: 13px; letter-spacing: 2px; margin-bottom: 24px; }
+  .cover h1 { font-size: 42px; font-weight: 700; background: linear-gradient(90deg, #a78bfa, #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 12px; }
+  .cover h2 { font-size: 20px; color: #94a3b8; font-weight: 400; margin-bottom: 32px; }
+  .cover-date { color: #64748b; font-size: 14px; }
+  .cover-links { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+  .cover-links a { background: #1e293b; border: 1px solid #334155; color: #94a3b8; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-size: 13px; transition: all 0.2s; }
+  .cover-links a:hover { border-color: #6c63ff; color: #a78bfa; }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
+  .section { margin-bottom: 48px; }
+  .section-title { font-size: 22px; font-weight: 700; color: #f1f5f9; border-left: 4px solid #6c63ff; padding-left: 14px; margin-bottom: 24px; }
+
+  .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 32px; }
+  .stat-card { background: #1e293b; border: 1px solid #2d3748; border-radius: 12px; padding: 20px; text-align: center; }
+  .stat-card .num { font-size: 36px; font-weight: 700; }
+  .stat-card .label { font-size: 13px; color: #64748b; margin-top: 4px; }
+  .green { color: #34d399; } .yellow { color: #fbbf24; } .red { color: #f87171; }
+  .blue { color: #60a5fa; } .purple { color: #a78bfa; }
+
+  .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 20px; }
+  .product-card { background: #1e293b; border: 1px solid #2d3748; border-radius: 14px; overflow: hidden; }
+  .product-header { padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; }
+  .product-name { font-size: 18px; font-weight: 700; }
+  .product-sub { font-size: 12px; color: #64748b; margin-top: 2px; }
+  .product-tag { font-size: 11px; padding: 3px 10px; border-radius: 12px; }
+  .tag-live { background: #065f4622; color: #34d399; border: 1px solid #34d39944; }
+  .tag-dev  { background: #1e3a5f22; color: #60a5fa;  border: 1px solid #60a5fa44; }
+  .tag-wip  { background: #78350f22; color: #fbbf24;  border: 1px solid #fbbf2444; }
+
+  .product-body { padding: 0 20px 20px; }
+  .dept-row { margin-bottom: 14px; }
+  .dept-label { font-size: 11px; color: #64748b; margin-bottom: 6px; display: flex; justify-content: space-between; }
+  .dept-label span { color: #94a3b8; font-size: 11px; }
+  .progress-bar { height: 6px; background: #0f1117; border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 3px; }
+  .fill-green  { background: linear-gradient(90deg, #065f46, #34d399); }
+  .fill-yellow { background: linear-gradient(90deg, #78350f, #fbbf24); }
+  .fill-red    { background: linear-gradient(90deg, #7f1d1d, #f87171); }
+  .fill-blue   { background: linear-gradient(90deg, #1e3a5f, #60a5fa); }
+  .fill-gray   { background: #334155; }
+
+  .note-tag { font-size: 11px; background: #0f1117; border: 1px solid #334155; color: #64748b; border-radius: 6px; padding: 4px 8px; margin-top: 8px; display: inline-block; }
+  .done-tag { font-size: 11px; background: #065f4622; border: 1px solid #34d39944; color: #34d399; border-radius: 6px; padding: 4px 8px; margin-top: 8px; display: inline-block; }
+  .warn-tag { font-size: 11px; background: #78350f22; border: 1px solid #fbbf2444; color: #fbbf24; border-radius: 6px; padding: 4px 8px; margin-top: 8px; display: inline-block; }
+
+  .sub-items { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .sub-item { font-size: 11px; padding: 3px 8px; border-radius: 6px; border: 1px solid #2d3748; }
+  .si-done { background: #065f4615; color: #34d399; border-color: #34d39933; }
+  .si-wip  { background: #78350f15; color: #fbbf24;  border-color: #fbbf2433; }
+  .si-todo { background: #1e293b;   color: #475569;  border-color: #334155; }
+  .si-new  { background: #1e3a5f15; color: #60a5fa;  border-color: #60a5fa44; }
+
+  .team-table { width: 100%; border-collapse: collapse; }
+  .team-table th { background: #0f1117; color: #64748b; font-size: 12px; font-weight: 600; padding: 10px 14px; text-align: left; letter-spacing: 1px; }
+  .team-table td { padding: 12px 14px; border-top: 1px solid #1e293b; font-size: 14px; }
+  .team-table tr:hover td { background: #1e293b44; }
+
+  .blocker-list, .good-list { display: flex; flex-direction: column; gap: 12px; }
+  .blocker-item { background: #1e293b; border: 1px solid #f8717133; border-left: 4px solid #f87171; border-radius: 8px; padding: 14px 18px; }
+  .blocker-item .title { font-weight: 600; color: #fca5a5; margin-bottom: 4px; }
+  .blocker-item .desc { font-size: 13px; color: #94a3b8; }
+  .good-item { background: #1e293b; border: 1px solid #34d39933; border-left: 4px solid #34d399; border-radius: 8px; padding: 14px 18px; }
+  .good-item .title { font-weight: 600; color: #6ee7b7; margin-bottom: 4px; }
+  .good-item .desc { font-size: 13px; color: #94a3b8; }
+
+  .links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+  .link-card { background: #1e293b; border: 1px solid #2d3748; border-radius: 10px; padding: 16px; display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; transition: border-color 0.2s; }
+  .link-card:hover { border-color: #6c63ff; }
+  .link-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+  .link-name { font-size: 14px; font-weight: 600; }
+  .link-url { font-size: 11px; color: #64748b; margin-top: 2px; }
+
+  .divider { height: 1px; background: #0f1117; margin: 12px 0; }
+  footer { text-align: center; color: #334155; font-size: 12px; padding: 40px; border-top: 1px solid #1e293b; }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-badge">INTERNAL — SHAREHOLDERS ONLY</div>
+  <h1>工作進度報告</h1>
+  <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin:28px 0 20px">
+    <div style="background:#065f4622;border:1px solid #34d39944;border-radius:12px;padding:16px 24px;text-align:center;min-width:120px">
+      <div style="font-size:32px;font-weight:800;color:#34d399">2</div>
+      <div style="font-size:12px;color:#64748b;margin-top:4px">核心產品 DEV 上線</div>
+    </div>
+    <div style="background:#78350f22;border:1px solid #fbbf2444;border-radius:12px;padding:16px 24px;text-align:center;min-width:120px">
+      <div style="font-size:32px;font-weight:800;color:#fbbf24">4</div>
+      <div style="font-size:12px;color:#64748b;margin-top:4px">換皮遊戲進行中</div>
+    </div>
+    <div style="background:#1e3a5f22;border:1px solid #60a5fa44;border-radius:12px;padding:16px 24px;text-align:center;min-width:120px">
+      <div style="font-size:32px;font-weight:800;color:#60a5fa">11</div>
+      <div style="font-size:12px;color:#64748b;margin-top:4px">換皮需求文檔完成</div>
+    </div>
+    <div style="background:#065f4622;border:1px solid #34d39944;border-radius:12px;padding:16px 24px;text-align:center;min-width:120px">
+      <div style="font-size:32px;font-weight:800;color:#34d399">9</div>
+      <div style="font-size:12px;color:#64748b;margin-top:4px">共用基礎建設完成</div>
+    </div>
+    <div style="background:#7f1d1d22;border:1px solid #f8717144;border-radius:12px;padding:16px 24px;text-align:center;min-width:120px">
+      <div style="font-size:32px;font-weight:800;color:#f87171">1</div>
+      <div style="font-size:12px;color:#64748b;margin-top:4px">待解決卡點</div>
+    </div>
+  </div>
+  <div class="cover-date">2026 年 4 月 10 日</div>
+</div>
+
+<div class="container">
+
+  <!-- ENVIRONMENT -->
+  <div class="section">
+    <div class="section-title">環境架構說明</div>
+
+    <!-- 合併：SVG 流程圖可點擊 + 下方說明展開 -->
+    <div style="background:#1e293b;border:1px solid #2d3748;border-radius:14px;padding:32px 24px 0;overflow-x:auto">
+      <svg viewBox="0 0 860 230" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:860px;display:block;margin:0 auto;cursor:pointer">
+        <defs>
+          <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#475569"/>
+          </marker>
+        </defs>
+
+        <!-- DEV box (clickable) -->
+        <g onclick="showEnv('dev')" style="cursor:pointer">
+          <rect id="rect-dev" x="20" y="60" width="220" height="110" rx="12" fill="#1e3a5f" stroke="#60a5fa" stroke-width="2"/>
+          <text x="130" y="100" text-anchor="middle" font-family="Microsoft JhengHei,sans-serif" font-size="26" font-weight="800" fill="#60a5fa">DEV</text>
+          <text x="130" y="122" text-anchor="middle" font-family="Microsoft JhengHei,sans-serif" font-size="12" fill="#94a3b8">開發調適環境</text>
+          <text x="130" y="155" text-anchor="middle" font-family="Microsoft JhengHei,sans-serif" font-size="13" font-weight="600" fill="#60a5fa">✅ 部署 SOP 已建立</text>
+          <!-- badge：用途標籤 -->
+          <rect x="46" y="26" width="168" height="26" rx="13" fill="#1e3a5f" stroke="#60a5fa55" stroke-width="1"/>
+          <text x="130" y="43" text-anchor="middle" font-family="Microsoft JhengHei,sans-serif" font-size="13" font-weight="600" fill="#3b82f6">內部開發使用</text>
+        </g>
+
+        <!-- Arrow DEV → UAT -->
+        <line x1="242" y1="115" x2="308" y2="115" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)" stroke-dasharray="5,3"/>
+        <text x="275" y="108" text-anchor="middle" font-family="Microsoft JhengHei,sans-serif" font-size="9" fill="#475569">驗收通過</text>
+        <text x="275" y="129" text-anchor="middle" font-family="Microsoft JhengHei,sans-serif" font-size="9" fill="#475569">發版上版</text>
+
+        <!-- UAT box (clickable) -->
+        <g onclick="showEnv('uat')" style="cursor:pointer">
+          <rect id="rect-uat" x="310" y="60" width="220" height="110" rx="12" fill="#2d1f0a" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="6,3"/>
+          <text x="420" y="100" text-anchor="middle" font-family="Microsoft JhengHei,sans-serif" font-size="26" font-weight="800" fill="#fbbf24">UAT</text>
+          <text x="420" y="122" text-anchor="middle" font-family="Microsoft JhengHei,sans-serif" font-size="12" fill="#94a3b8">類正式環境</text>
+          <text x="420" y="155" text-anchor="middle" font-family="Microsoft JhengHei,sans-serif" font-size="13" font-weight="600" fill="#fbbf24">⚠️ 待專業運維建置</text>
+          <!-- badge：用途標籤 -->
+          <rect x="326" y="26" width="188" height="26" rx="13" fill="#2d1f0a" stroke="#fbbf2455" stroke-width="1"/>
+          <text x="420" y="43" text-anchor="middle" font-family="Microsoft JhengHei,sans-serif" font-size="13" font-weight="600" fill="#f59e0b">外部測試 / DEMO 體驗</text>
+        </g>
+
+        <!-- Arrow UAT → PRO -->
+        <line x1="532" y1="115" x2="598" y2="115" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)" stroke-dasharray="5,3"/>
+        <text x="565" y="108" text-anchor="middle" font-family="Microsoft JhengHei,sans-serif" font-size="9" fill="#475569">完整驗收</text>
+        <text x="565" y="129" text-anchor="middle" font-family="Microsoft JhengHei,sans-serif" font-size="9" fill="#475569">正式部署</text>
+
+        <!-- PRO box (clickable) -->
+        <g onclick="showEnv('pro')" style="cursor:pointer">
+          <rect id="rect-pro" x="600" y="60" width="220" height="110" rx="12" fill="#0a1f0f" stroke="#34d399" stroke-width="1.5" stroke-dasharray="6,3"/>
+          <text x="710" y="100" text-anchor="middle" font-family="Microsoft JhengHei,sans-serif" font-size="26" font-weight="800" fill="#34d399">PRO</text>
+          <text x="710" y="122" text-anchor="middle" font-family="Microsoft JhengHei,sans-serif" font-size="12" fill="#94a3b8">正式運行環境</text>
+          <text x="710" y="155" text-anchor="middle" font-family="Microsoft JhengHei,sans-serif" font-size="13" font-weight="600" fill="#34d399">🔒 待 UAT 完成後推進</text>
+          <!-- badge：用途標籤 -->
+          <rect x="626" y="26" width="168" height="26" rx="13" fill="#0a1f0f" stroke="#34d39955" stroke-width="1"/>
+          <text x="710" y="43" text-anchor="middle" font-family="Microsoft JhengHei,sans-serif" font-size="13" font-weight="600" fill="#10b981">正式上線 / 玩家使用</text>
+        </g>
+
+        <!-- 底部提示 -->
+        <text x="430" y="215" text-anchor="middle" font-family="Microsoft JhengHei,sans-serif" font-size="10" fill="#334155">點擊各環境框查看詳細說明</text>
+      </svg>
+
+      <!-- 說明展開區（在圖框內底部） -->
+      <div id="env-detail" style="margin-top:16px;border-top:1px solid #2d3748;padding:20px 4px 24px">
+        <div id="env-dev" class="env-content">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+            <span style="font-size:15px;font-weight:700;color:#60a5fa">DEV — 開發調適環境</span>
+            <span class="product-tag tag-dev">✅ 部署 SOP 已建立</span>
+          </div>
+          <div style="font-size:13px;color:#94a3b8;line-height:1.9;margin-bottom:16px">
+            供工程師日常開發、除錯、排錯使用。版本隨時可能更新，功能尚未穩定，不適合對外展示。DEV 部署 SOP 已建立，各遊戲線依序按流程進行部署。
+          </div>
+          <div style="font-size:11px;color:#475569;letter-spacing:1px;margin-bottom:8px">前台測試站</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">
+            <a href="https://demo-web.fuyuit.tw/#" target="_blank"
+              style="display:flex;align-items:center;gap:6px;background:#0f1117;border:1px solid #334155;border-radius:8px;padding:7px 12px;text-decoration:none;color:#94a3b8;font-size:12px;transition:border-color 0.2s"
+              onmouseover="this.style.borderColor='#34d399';this.style.color='#34d399'" onmouseout="this.style.borderColor='#334155';this.style.color='#94a3b8'">
+              🌐 品牌官網
+            </a>
+            <a href="https://dev-goldslots-original.fuyuit.tw/?ssoKey=test003" target="_blank"
+              style="display:flex;align-items:center;gap:6px;background:#0f1117;border:1px solid #334155;border-radius:8px;padding:7px 12px;text-decoration:none;color:#94a3b8;font-size:12px;transition:border-color 0.2s"
+              onmouseover="this.style.borderColor='#60a5fa';this.style.color='#60a5fa'" onmouseout="this.style.borderColor='#334155';this.style.color='#94a3b8'">
+              🎰 迪亞勇士（Dia Warrior）
+            </a>
+            <a href="https://dev-superace-original.fuyuit.tw/?ssoKey=test003" target="_blank"
+              style="display:flex;align-items:center;gap:6px;background:#0f1117;border:1px solid #334155;border-radius:8px;padding:7px 12px;text-decoration:none;color:#94a3b8;font-size:12px;transition:border-color 0.2s"
+              onmouseover="this.style.borderColor='#60a5fa';this.style.color='#60a5fa'" onmouseout="this.style.borderColor='#334155';this.style.color='#94a3b8'">
+              ♠️ 樸克王國（POKER Kingdom）
+            </a>
+            <a href="https://dev-aquarius.fuyuit.tw/?ssoKey=test003" target="_blank"
+              style="display:flex;align-items:center;gap:6px;background:#0f1117;border:1px solid #334155;border-radius:8px;padding:7px 12px;text-decoration:none;color:#94a3b8;font-size:12px;transition:border-color 0.2s"
+              onmouseover="this.style.borderColor='#60a5fa';this.style.color='#60a5fa'" onmouseout="this.style.borderColor='#334155';this.style.color='#94a3b8'">
+              🌊 水之星河（Aquarius）
+            </a>
+            <a href="https://dev-pisces.fuyuit.tw/?ssoKey=test003" target="_blank"
+              style="display:flex;align-items:center;gap:6px;background:#0f1117;border:1px solid #334155;border-radius:8px;padding:7px 12px;text-decoration:none;color:#94a3b8;font-size:12px;transition:border-color 0.2s"
+              onmouseover="this.style.borderColor='#60a5fa';this.style.color='#60a5fa'" onmouseout="this.style.borderColor='#334155';this.style.color='#94a3b8'">
+              🌙 雙魚夢境（Pisces）
+            </a>
+          </div>
+
+          <div style="height:1px;background:#2d3748;margin-bottom:14px"></div>
+          <div style="font-size:11px;color:#475569;letter-spacing:1px;margin-bottom:8px">後台工具</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+
+            <!-- 報表系統 -->
+            <div style="display:flex;align-items:center;gap:10px">
+              <span style="font-size:11px;color:#64748b;min-width:64px">共用</span>
+              <a href="https://dev-integrationgateway-original-api.fuyuit.tw/dashboard.html" target="_blank"
+                style="display:flex;align-items:center;gap:6px;background:#0f1117;border:1px solid #334155;border-radius:8px;padding:7px 12px;text-decoration:none;color:#94a3b8;font-size:12px"
+                onmouseover="this.style.borderColor='#a78bfa';this.style.color='#a78bfa'" onmouseout="this.style.borderColor='#334155';this.style.color='#94a3b8'">
+                📊 報表系統
+              </a>
+            </div>
+
+            <!-- 樸克王國 -->
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+              <span style="font-size:11px;color:#64748b;min-width:64px">樸克王國</span>
+              <a href="https://dev-superace-original-api.fuyuit.tw/demo/play" target="_blank"
+                style="display:flex;align-items:center;gap:6px;background:#0f1117;border:1px solid #334155;border-radius:8px;padding:7px 12px;text-decoration:none;color:#94a3b8;font-size:12px"
+                onmouseover="this.style.borderColor='#60a5fa';this.style.color='#60a5fa'" onmouseout="this.style.borderColor='#334155';this.style.color='#94a3b8'">
+                🪙 加值測試工具
+              </a>
+              <a href="https://dev-superace-original-api.fuyuit.tw/sim" target="_blank"
+                style="display:flex;align-items:center;gap:6px;background:#0f1117;border:1px solid #334155;border-radius:8px;padding:7px 12px;text-decoration:none;color:#94a3b8;font-size:12px"
+                onmouseover="this.style.borderColor='#60a5fa';this.style.color='#60a5fa'" onmouseout="this.style.borderColor='#334155';this.style.color='#94a3b8'">
+                📈 RTP 分析工具
+              </a>
+            </div>
+
+            <!-- 迪亞勇士 -->
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+              <span style="font-size:11px;color:#64748b;min-width:64px">迪亞勇士</span>
+              <a href="https://dev-goldslots-original-api.fuyuit.tw/demo/play" target="_blank"
+                style="display:flex;align-items:center;gap:6px;background:#0f1117;border:1px solid #334155;border-radius:8px;padding:7px 12px;text-decoration:none;color:#94a3b8;font-size:12px"
+                onmouseover="this.style.borderColor='#60a5fa';this.style.color='#60a5fa'" onmouseout="this.style.borderColor='#334155';this.style.color='#94a3b8'">
+                🪙 加值測試工具
+              </a>
+              <a href="https://dev-goldslots-original-api.fuyuit.tw/sim" target="_blank"
+                style="display:flex;align-items:center;gap:6px;background:#0f1117;border:1px solid #334155;border-radius:8px;padding:7px 12px;text-decoration:none;color:#94a3b8;font-size:12px"
+                onmouseover="this.style.borderColor='#60a5fa';this.style.color='#60a5fa'" onmouseout="this.style.borderColor='#334155';this.style.color='#94a3b8'">
+                📈 RTP 分析工具
+              </a>
+            </div>
+
+          </div>
+
+        </div>
+        <div id="env-uat" class="env-content" style="display:none">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+            <span style="font-size:15px;font-weight:700;color:#fbbf24">UAT — 類正式環境</span>
+            <span class="product-tag tag-wip">⚠️ 待建置</span>
+          </div>
+          <div style="font-size:13px;color:#94a3b8;line-height:1.9">
+            對外開放的測試環境，部署規格比照正式環境，提供穩定版本供外部測試與 DEMO 體驗。上版節奏固定，不即時反映開發變動。目前尚未建置，需專業運維團隊介入。
+          </div>
+        </div>
+        <div id="env-pro" class="env-content" style="display:none">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+            <span style="font-size:15px;font-weight:700;color:#34d399">PRO — 正式運行環境</span>
+            <span class="product-tag" style="background:#7f1d1d22;color:#f87171;border:1px solid #f8717144">🔒 尚未開放</span>
+          </div>
+          <div style="font-size:13px;color:#94a3b8;line-height:1.9">
+            面向真實用戶的正式上線環境，需通過 UAT 完整驗收後才能部署。採高可用性架構，具備監控、備份與緊急回滾機制。待 UAT 完成後推進。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showEnv(env) {
+      ['dev','uat','pro'].forEach(e => {
+        document.getElementById('env-' + e).style.display = 'none';
+        const rect = document.getElementById('rect-' + e);
+        if (rect) rect.style.filter = '';
+      });
+      document.getElementById('env-' + env).style.display = 'block';
+      const rect = document.getElementById('rect-' + env);
+      if (rect) rect.style.filter = 'brightness(1.4)';
+    }
+    showEnv('dev');
+  </script>
+
+  <!-- INFRASTRUCTURE -->
+  <div class="section">
+    <div class="section-title">共用基礎建設（全部完成）</div>
+    <div class="product-card">
+      <div class="product-header" style="background: linear-gradient(90deg, #065f4610, transparent)">
+        <div>
+          <div class="product-name" style="color:#34d399">✅ 共用平台</div>
+          <div class="product-sub">負責人：Maki</div>
+        </div>
+        <span class="product-tag tag-live">100% 完成</span>
+      </div>
+      <div class="product-body">
+        <div class="sub-items">
+          <span class="sub-item si-done">AWS 機器管理</span>
+          <span class="sub-item si-done">DNS / Route 53</span>
+          <span class="sub-item si-done">CI/CD Jenkins</span>
+          <span class="sub-item si-done">GitLab 版本控制</span>
+          <span class="sub-item si-done">Docker / Nginx / SSL</span>
+          <span class="sub-item si-done">n8n 自動化串接</span>
+          <span class="sub-item si-done">原始 Code 導入</span>
+          <span class="sub-item si-done">品牌官網製作</span>
+          <span class="sub-item si-done">共用命名規範</span>
+        </div>
+        <div class="divider"></div>
+        <div style="font-size:11px;color:#475569;letter-spacing:1px;margin-bottom:10px">技術管理工具</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <a href="https://svrportainer.fuyuit.tw/#!/auth" target="_blank"
+            style="display:flex;flex-direction:column;gap:2px;background:#0f1117;border:1px solid #334155;border-radius:8px;padding:8px 12px;text-decoration:none;color:#94a3b8;font-size:12px;min-width:140px"
+            onmouseover="this.style.borderColor='#f87171';this.style.color='#f87171'" onmouseout="this.style.borderColor='#334155';this.style.color='#94a3b8'">
+            <span>🐳 Portainer</span>
+            <span style="font-size:10px;color:#475569;margin-top:2px">容器管理（Docker）</span>
+          </a>
+          <a href="https://svrnpm.fuyuit.tw/login" target="_blank"
+            style="display:flex;flex-direction:column;gap:2px;background:#0f1117;border:1px solid #334155;border-radius:8px;padding:8px 12px;text-decoration:none;color:#94a3b8;font-size:12px;min-width:140px"
+            onmouseover="this.style.borderColor='#f87171';this.style.color='#f87171'" onmouseout="this.style.borderColor='#334155';this.style.color='#94a3b8'">
+            <span>🔀 NPM（主機）</span>
+            <span style="font-size:10px;color:#475569;margin-top:2px">反向代理 / 域名管理</span>
+          </a>
+          <a href="https://envnpm.fuyuit.tw/login" target="_blank"
+            style="display:flex;flex-direction:column;gap:2px;background:#0f1117;border:1px solid #334155;border-radius:8px;padding:8px 12px;text-decoration:none;color:#94a3b8;font-size:12px;min-width:140px"
+            onmouseover="this.style.borderColor='#f87171';this.style.color='#f87171'" onmouseout="this.style.borderColor='#334155';this.style.color='#94a3b8'">
+            <span>🔀 NPM（環境）</span>
+            <span style="font-size:10px;color:#475569;margin-top:2px">反向代理 / 域名管理</span>
+          </a>
+          <a href="https://gitlab.fuyuit.tw/login" target="_blank"
+            style="display:flex;flex-direction:column;gap:2px;background:#0f1117;border:1px solid #334155;border-radius:8px;padding:8px 12px;text-decoration:none;color:#94a3b8;font-size:12px;min-width:140px"
+            onmouseover="this.style.borderColor='#f87171';this.style.color='#f87171'" onmouseout="this.style.borderColor='#334155';this.style.color='#94a3b8'">
+            <span>🦊 GitLab</span>
+            <span style="font-size:10px;color:#475569;margin-top:2px">版本控制 / 程式碼倉庫</span>
+          </a>
+          <a href="https://jenkins.fuyuit.tw/login" target="_blank"
+            style="display:flex;flex-direction:column;gap:2px;background:#0f1117;border:1px solid #334155;border-radius:8px;padding:8px 12px;text-decoration:none;color:#94a3b8;font-size:12px;min-width:140px"
+            onmouseover="this.style.borderColor='#f87171';this.style.color='#f87171'" onmouseout="this.style.borderColor='#334155';this.style.color='#94a3b8'">
+            <span>⚙️ Jenkins</span>
+            <span style="font-size:10px;color:#475569;margin-top:2px">CI/CD 自動部署流水線</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCTS -->
+  <div class="section">
+    <div class="section-title">產品進度</div>
+    <div class="product-grid">
+
+      <!-- GoldSlots 皇家帝國 -->
+      <div class="product-card">
+        <div class="product-header" style="background: linear-gradient(90deg, #78350f18, transparent)">
+          <div>
+            <div class="product-name" style="color:#fbbf24">🎰 迪亞勇士（Dia Warrior）</div>
+            <div class="product-sub">皇家帝國架構</div>
+          </div>
+          <span class="product-tag tag-dev">DEV 上線中</span>
+        </div>
+        <div class="product-body">
+
+          <div class="dept-row">
+            <div class="dept-label">PM <span>Maki</span></div>
+            <div class="progress-bar"><div class="progress-fill fill-green" style="width:100%"></div></div>
+            <div style="font-size:11px;color:#64748b;margin-top:4px">100%｜所有 PM 文件全部完成</div>
+            <div class="sub-items">
+              <span class="sub-item si-done">原架構整理</span>
+              <span class="sub-item si-done">換皮文檔 ×7</span>
+              <span class="sub-item si-done">登入/房間規劃</span>
+              <span class="sub-item si-done">RTP 規劃</span>
+              <span class="sub-item si-done">水池規劃</span>
+              <span class="sub-item si-done">任務規劃</span>
+            </div>
+          </div>
+          <div class="divider"></div>
+
+          <div class="dept-row">
+            <div class="dept-label">後端 <span>Sammy</span></div>
+            <div class="progress-bar"><div class="progress-fill fill-yellow" style="width:50%"></div></div>
+            <div class="sub-items">
+              <span class="sub-item si-done">水池模組</span>
+              <span class="sub-item si-wip">錢包接入 80%</span>
+              <span class="sub-item si-wip">報表系統 60%</span>
+              <span class="sub-item si-wip">RTP 實作 80%</span>
+              <span class="sub-item si-todo">登入/房間邏輯</span>
+              <span class="sub-item si-todo">新手任務</span>
+              <span class="sub-item si-todo">成就任務</span>
+            </div>
+          </div>
+          <div class="divider"></div>
+
+          <div class="dept-row">
+            <div class="dept-label">前端 <span>Johnny</span></div>
+            <div class="progress-bar"><div class="progress-fill fill-yellow" style="width:35%"></div></div>
+            <div class="sub-items">
+              <span class="sub-item si-wip">快速換皮流程 60%</span>
+              <span class="sub-item si-wip">Loading 更換 20%</span>
+              <span class="sub-item si-todo">登入/房間介面</span>
+              <span class="sub-item si-todo">任務介面</span>
+            </div>
+          </div>
+          <div class="divider"></div>
+
+          <div class="dept-row">
+            <div class="dept-label">音效 <span>Maki</span></div>
+            <div class="progress-bar"><div class="progress-fill fill-green" style="width:95%"></div></div>
+            <div class="sub-items">
+              <span class="sub-item si-done">主題音效換皮</span>
+              <span class="sub-item si-done">BGM/SFX 規格</span>
+              <span class="sub-item si-done">音效整合流程</span>
+              <span class="sub-item si-wip">AI 生成流程 90%</span>
+            </div>
+          </div>
+          <div class="divider"></div>
+
+          <div class="dept-row">
+            <div class="dept-label">QA <span>Maki</span></div>
+            <div class="progress-bar"><div class="progress-fill fill-gray" style="width:0%"></div></div>
+            <div class="sub-items">
+              <span class="sub-item si-todo">AI QA 製作</span>
+              <span class="sub-item si-todo">自主訓練機制</span>
+            </div>
+          </div>
+          <div class="divider"></div>
+
+          <div class="dept-row">
+            <div class="dept-label">運維</div>
+            <div class="progress-bar"><div class="progress-fill fill-yellow" style="width:33%"></div></div>
+            <div style="font-size:11px;color:#64748b;margin-top:4px">前後端 DEV 33%</div>
+            <span class="warn-tag">⚠️ UAT / PRO 需專業運維團隊</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SUPERACE -->
+      <div class="product-card">
+        <div class="product-header" style="background: linear-gradient(90deg, #1e3a5f18, transparent)">
+          <div>
+            <div class="product-name" style="color:#60a5fa">♠️ 樸克王國（POKER Kingdom）</div>
+            <div class="product-sub">SuperAce 架構</div>
+          </div>
+          <span class="product-tag tag-dev">DEV 上線中</span>
+        </div>
+        <div class="product-body">
+
+          <div class="dept-row">
+            <div class="dept-label">PM <span>Maki</span></div>
+            <div class="progress-bar"><div class="progress-fill fill-green" style="width:100%"></div></div>
+            <div style="font-size:11px;color:#64748b;margin-top:4px">100%｜所有 PM 文件全部完成</div>
+            <div class="sub-items">
+              <span class="sub-item si-done">原架構整理</span>
+              <span class="sub-item si-done">換皮文檔 ×4</span>
+              <span class="sub-item si-done">登入/房間規劃</span>
+              <span class="sub-item si-done">任務規劃 ✅NEW</span>
+              <span class="sub-item si-done">RTP 規劃</span>
+              <span class="sub-item si-done">水池規劃</span>
+            </div>
+          </div>
+          <div class="divider"></div>
+
+          <div class="dept-row">
+            <div class="dept-label">後端 <span>Sammy</span></div>
+            <div class="progress-bar"><div class="progress-fill fill-yellow" style="width:63%"></div></div>
+            <div class="sub-items">
+              <span class="sub-item si-done">水池模組</span>
+              <span class="sub-item si-done">免費遊戲/Scatter ✅解決</span>
+              <span class="sub-item si-wip">錢包接入 80%</span>
+              <span class="sub-item si-wip">報表系統 60%</span>
+              <span class="sub-item si-wip">RTP 模擬 80%</span>
+              <span class="sub-item si-new">登入/房間 40% 🆕</span>
+              <span class="sub-item si-new">新手任務 10% 🆕</span>
+              <span class="sub-item si-todo">成就任務</span>
+            </div>
+          </div>
+          <div class="divider"></div>
+
+          <div class="dept-row">
+            <div class="dept-label">前端 <span>Johnny</span></div>
+            <div class="progress-bar"><div class="progress-fill fill-yellow" style="width:43%"></div></div>
+            <div class="sub-items">
+              <span class="sub-item si-wip">速度/介面優化 90%</span>
+              <span class="sub-item si-wip">快速換皮流程 60%</span>
+              <span class="sub-item si-wip">Loading 更換 20%</span>
+              <span class="sub-item si-todo">登入/房間介面</span>
+              <span class="sub-item si-todo">任務介面</span>
+            </div>
+          </div>
+          <div class="divider"></div>
+
+          <div class="dept-row">
+            <div class="dept-label">QA <span>Maki</span></div>
+            <div class="progress-bar"><div class="progress-fill fill-green" style="width:80%"></div></div>
+            <div class="sub-items">
+              <span class="sub-item si-done">AI QA 製作</span>
+              <span class="sub-item si-done">QA 報告</span>
+              <span class="sub-item si-wip">自主訓練 40%（L1）</span>
+            </div>
+          </div>
+          <div class="divider"></div>
+
+          <div class="dept-row">
+            <div class="dept-label">音效 <span>Maki</span></div>
+            <div class="progress-bar"><div class="progress-fill fill-green" style="width:95%"></div></div>
+            <div class="sub-items">
+              <span class="sub-item si-done">主題音效換皮</span>
+              <span class="sub-item si-done">BGM/SFX 規格</span>
+              <span class="sub-item si-done">音效整合流程</span>
+              <span class="sub-item si-wip">AI 生成流程 90%</span>
+            </div>
+          </div>
+          <div class="divider"></div>
+
+          <div class="dept-row">
+            <div class="dept-label">運維</div>
+            <div class="progress-bar"><div class="progress-fill fill-yellow" style="width:33%"></div></div>
+            <div style="font-size:11px;color:#64748b;margin-top:4px">前後端 DEV 33%</div>
+            <span class="warn-tag">⚠️ UAT / PRO 需專業運維團隊</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 水之星河 -->
+      <div class="product-card">
+        <div class="product-header" style="background: linear-gradient(90deg, #0c4a6e18, transparent)">
+          <div>
+            <div class="product-name" style="color:#38bdf8">🐟 水之星河（十二宮）</div>
+            <div class="product-sub">皇家帝國換皮｜Pisces</div>
+          </div>
+          <span class="product-tag tag-wip">美術進行中</span>
+        </div>
+        <div class="product-body">
+
+          <div class="dept-row">
+            <div class="dept-label">美術 <span>Ivy（內部）</span></div>
+            <div class="progress-bar"><div class="progress-fill fill-blue" style="width:53%"></div></div>
+            <div class="sub-items">
+              <span class="sub-item si-wip">2D 視覺 70%（轉場&結算精稿中）</span>
+              <span class="sub-item si-wip">角色拆圖 80%</span>
+              <span class="sub-item si-wip">共用元件 10%</span>
+            </div>
+          </div>
+          <div class="divider"></div>
+
+          <div class="dept-row">
+            <div class="dept-label">動效 <span>Arm</span></div>
+            <div class="progress-bar"><div class="progress-fill fill-red" style="width:2%"></div></div>
+            <div style="font-size:11px;color:#64748b;margin-top:4px">遊戲動效 2%（剛啟動）</div>
+          </div>
+          <div class="divider"></div>
+
+          <div class="dept-row">
+            <div class="dept-label">前端 <span>Johnny</span></div>
+            <div class="progress-bar"><div class="progress-fill fill-yellow" style="width:40%"></div></div>
+            <div style="font-size:11px;color:#64748b;margin-top:4px">換皮實作 40%</div>
+          </div>
+          <div class="divider"></div>
+
+          <div class="dept-row">
+            <div class="dept-label">音效 <span>Maki</span></div>
+            <div class="progress-bar"><div class="progress-fill fill-yellow" style="width:70%"></div></div>
+            <div style="font-size:11px;color:#64748b;margin-top:4px">70%｜部分音效需微調</div>
+          </div>
+          <div class="divider"></div>
+
+          <div class="dept-row">
+            <div class="dept-label">運維 / QA</div>
+            <div class="progress-bar"><div class="progress-fill fill-gray" style="width:16%"></div></div>
+            <div style="font-size:11px;color:#64748b;margin-top:4px">運維前端 DEV 33%｜QA 待開始</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 摩羯座 -->
+      <div class="product-card">
+        <div class="product-header" style="background: linear-gradient(90deg, #3b276018, transparent)">
+          <div>
+            <div class="product-name" style="color:#a78bfa">🏺 摩羯座（十二宮）</div>
+            <div class="product-sub">皇家帝國換皮｜Aquarius</div>
+          </div>
+          <span class="product-tag tag-wip">美術進行中</span>
+        </div>
+        <div class="product-body">
+
+          <div class="dept-row">
+            <div class="dept-label">美術 <span>外包 Nicole｜對接 Maki</span></div>
+            <div class="progress-bar"><div class="progress-fill fill-yellow" style="width:40%"></div></div>
+            <div style="font-size:11px;color:#64748b;margin-top:4px">2D 視覺 40%｜尚未定稿</div>
+            <span class="note-tag">📌 待定稿後進入換皮流程</span>
+          </div>
+          <div class="divider"></div>
+
+          <div class="dept-row">
+            <div class="dept-label">音效 <span>外包 優里｜對接 Ivy</span></div>
+            <div class="progress-bar"><div class="progress-fill fill-yellow" style="width:70%"></div></div>
+            <div style="font-size:11px;color:#64748b;margin-top:4px">70%｜需求溝通完畢進行中</div>
+          </div>
+          <div class="divider"></div>
+
+          <div class="dept-row">
+            <div class="dept-label">運維 / QA / 前端 / 動效</div>
+            <div class="progress-bar"><div class="progress-fill fill-gray" style="width:13%"></div></div>
+            <div style="font-size:11px;color:#64748b;margin-top:4px">運維 DEV 33%｜QA 20%｜前端/動效 待開始</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 雙魚夢境 -->
+      <div class="product-card">
+        <div class="product-header" style="background: linear-gradient(90deg, #0c4a2618, transparent)">
+          <div>
+            <div class="product-name" style="color:#6ee7b7">🌙 雙魚夢境（十二宮）</div>
+            <div class="product-sub">皇家帝國換皮</div>
+          </div>
+          <span class="product-tag tag-wip">最快可進入換皮</span>
+        </div>
+        <div class="product-body">
+
+          <div class="dept-row">
+            <div class="dept-label">美術 <span>外包 SEVEN｜對接 Maki</span></div>
+            <div class="progress-bar"><div class="progress-fill fill-green" style="width:80%"></div></div>
+            <div style="font-size:11px;color:#64748b;margin-top:4px">2D 視覺 80%</div>
+            <span class="done-tag">✅ 已定稿，只差拆圖</span>
+          </div>
+          <div class="divider"></div>
+
+          <div class="dept-row">
+            <div class="dept-label">音效 <span>Maki</span></div>
+            <div class="progress-bar"><div class="progress-fill fill-yellow" style="width:70%"></div></div>
+            <div style="font-size:11px;color:#64748b;margin-top:4px">70%｜部分音效需微調</div>
+          </div>
+          <div class="divider"></div>
+
+          <div class="dept-row">
+            <div class="dept-label">運維 / 前端 / QA / 動效</div>
+            <div class="progress-bar"><div class="progress-fill fill-gray" style="width:11%"></div></div>
+            <div style="font-size:11px;color:#64748b;margin-top:4px">運維 DEV 33%｜其餘待開始</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 奢華2 Luxe2 -->
+      <div class="product-card">
+        <div class="product-header" style="background: linear-gradient(90deg, #45291018, transparent)">
+          <div>
+            <div class="product-name" style="color:#f59e0b">💎 奢華2 Luxe2</div>
+            <div class="product-sub">SuperAce 換皮</div>
+          </div>
+          <span class="product-tag tag-wip">美術剛啟動</span>
+        </div>
+        <div class="product-body">
+
+          <div class="dept-row">
+            <div class="dept-label">美術 <span>Ivy（內部）｜對接 Maki</span></div>
+            <div class="progress-bar"><div class="progress-fill fill-red" style="width:10%"></div></div>
+            <div style="font-size:11px;color:#64748b;margin-top:4px">2D 視覺 10%｜已定稿，只差拆圖</div>
+          </div>
+          <div class="divider"></div>
+
+          <div class="dept-row">
+            <div class="dept-label">動效 / 前端 / QA / 運維 / 音效</div>
+            <div class="progress-bar"><div class="progress-fill fill-gray" style="width:0%"></div></div>
+            <div style="font-size:11px;color:#64748b;margin-top:4px">全部待開始（等美術素材到位）</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PM FUTURE PLANS -->
+  <div class="section">
+    <div class="section-title">PM 規劃文件總覽</div>
+    <div class="product-grid">
+
+      <!-- 換皮遊戲 GameCode -->
+      <div class="product-card">
+        <div class="product-header" style="background: linear-gradient(90deg, #6c63ff18, transparent)">
+          <div>
+            <div class="product-name" style="color:#a78bfa">🎮 換皮遊戲 GameCode 規劃</div>
+            <div class="product-sub">迪亞勇士 × 7 款 ／ 樸克王國 × 4 款</div>
+          </div>
+          <span class="product-tag" style="background:#065f4622;color:#34d399;border:1px solid #34d39944">需求文件全數完成</span>
+        </div>
+        <div class="product-body">
+          <div style="display:flex;gap:16px;flex-wrap:wrap">
+            <div style="flex:1;min-width:200px">
+              <div style="font-size:11px;color:#475569;letter-spacing:1px;margin-bottom:8px">迪亞勇士（FLG）</div>
+              <div class="sub-items" style="flex-direction:column;gap:4px">
+                <span class="sub-item si-wip">FLG_001 魔杰座 Capricorn King</span>
+                <span class="sub-item si-wip">FLG_002 水之星河 Starflow</span>
+                <span class="sub-item si-wip">FLG_003 雙魚夢境 Pisces Dream</span>
+                <span class="sub-item si-done">FLG_004 大地寶庫 Earth Gold</span>
+                <span class="sub-item si-done">FLG_005 鬼火來財 Ghostfire</span>
+                <span class="sub-item si-done">FLG_006 星風幻境 Starwind</span>
+                <span class="sub-item si-done">FLG_007 烈日神域 Blazing Sun</span>
+              </div>
+            </div>
+            <div style="flex:1;min-width:200px">
+              <div style="font-size:11px;color:#475569;letter-spacing:1px;margin-bottom:8px">樸克王國（FLS）</div>
+              <div class="sub-items" style="flex-direction:column;gap:4px">
+                <span class="sub-item si-wip">FLS_001 奢華2 LUXE 2</span>
+                <span class="sub-item si-done">FLS_002 海皇 Ocean King</span>
+                <span class="sub-item si-done">FLS_003 天宮 Celestial Palace</span>
+                <span class="sub-item si-done">FLS_004 焚天炎神 Inferno God</span>
+                <span class="sub-item si-todo">FLS_005 規劃中</span>
+                <span class="sub-item si-todo">FLS_006 規劃中</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 任務系統 -->
+      <div class="product-card">
+        <div class="product-header" style="background: linear-gradient(90deg, #0c4a6e18, transparent)">
+          <div>
+            <div class="product-name" style="color:#38bdf8">📋 玩家任務與成長系統</div>
+            <div class="product-sub">提升留存 ／ 增加遊玩深度 ／ 長期活躍</div>
+          </div>
+          <span class="product-tag tag-live">規劃完成</span>
+        </div>
+        <div class="product-body">
+          <div style="display:flex;flex-direction:column;gap:12px">
+
+            <div>
+              <div style="font-size:12px;font-weight:600;color:#38bdf8;margin-bottom:5px">🎯 新手任務</div>
+              <div style="font-size:12px;color:#94a3b8;line-height:1.8">玩家第一次進入遊戲自動開啟，分 3 段引導體驗核心玩法。完成全部任務可累積獲得 30 次免費轉，分段發放讓玩家感受「一直有東西可拿」，有效提升首日留存。</div>
+            </div>
+
+            <div>
+              <div style="font-size:12px;font-weight:600;color:#38bdf8;margin-bottom:5px">🏆 成就任務</div>
+              <div style="font-size:12px;color:#94a3b8;line-height:1.8">長期成長系統，記錄玩家累積表現（投注局數、中獎次數、觸發免費遊戲等）。分階段解鎖成就、獲得稱號、徽章與頭像框，提供持續追求的目標感。</div>
+            </div>
+
+            <div>
+              <div style="font-size:12px;font-weight:600;color:#38bdf8;margin-bottom:5px">⭐ 等級系統（Spin 累積制）</div>
+              <div style="font-size:12px;color:#94a3b8;line-height:1.8">唯一成長軸為累積旋轉次數，簡單直覺。等級越高享有更多榮譽展示與 RTP 體感微幅提升（上限 0.5%，不影響水池穩定性）。</div>
+            </div>
+
+            <div>
+              <div style="font-size:12px;font-weight:600;color:#38bdf8;margin-bottom:5px">📊 排行榜 ／ 生日禮金 ／ 勳章展示</div>
+              <div style="font-size:12px;color:#94a3b8;line-height:1.8">排行榜以榮譽型獎勵為主（限定頭像框、稱號），搭配少量免費轉。生日禮金依等級段位發放。所有福利成本納入水池保險池管理，不影響主派彩結構。</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- 登入與選房間系統 -->
+      <div class="product-card">
+        <div class="product-header" style="background: linear-gradient(90deg, #065f4618, transparent)">
+          <div>
+            <div class="product-name" style="color:#34d399">🚪 登入與選機台系統</div>
+            <div class="product-sub">SSO 單一登入 ／ 獨立機台分配 ／ 動態擴容</div>
+          </div>
+          <span class="product-tag tag-live">規劃完成</span>
+        </div>
+        <div class="product-body">
+          <div style="display:flex;flex-direction:column;gap:12px">
+
+            <div>
+              <div style="font-size:12px;font-weight:600;color:#34d399;margin-bottom:5px">🔑 SSO 統一登入</div>
+              <div style="font-size:12px;color:#94a3b8;line-height:1.8">玩家透過統一帳號登入後，系統自動核發遊戲 Token 並記住登入狀態，Token 有效期內再次進入免輸密碼，直接跳進選機台頁面。</div>
+            </div>
+
+            <div>
+              <div style="font-size:12px;font-weight:600;color:#34d399;margin-bottom:5px">🎰 獨立機台制（1人1台）</div>
+              <div style="font-size:12px;color:#94a3b8;line-height:1.8">每位玩家進入遊戲後分配一台獨立機台，機台清單即時顯示各台的 RTP 累計數據與歷史最高爆獎倍數，讓玩家自由選擇「感覺好的機台」，增加趣味與掌控感。</div>
+            </div>
+
+            <div>
+              <div style="font-size:12px;font-weight:600;color:#34d399;margin-bottom:5px">📈 動態擴容與常駐保護</div>
+              <div style="font-size:12px;color:#94a3b8;line-height:1.8">系統最低保持 100 台機台常駐，當在線人數接近上限時自動批次新增 100 台，確保玩家不會遇到無台可選的情況。閒置超過 30 小時的空台會自動回收，保持資源效率。</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- BLOCKER -->
+  <div class="section">
+    <div class="section-title">🚨 待解決卡點</div>
+    <div class="blocker-list">
+      <div class="blocker-item">
+        <div class="title">UAT / PRO 環境部署缺乏專業運維團隊</div>
+        <div class="desc">所有產品目前均只有 DEV 環境就緒。UAT / PRO 是進入正式上線的主要瓶頸，需補充專業運維人力。此問題影響全部遊戲線。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TEAM -->
+  <div class="section">
+    <div class="section-title">團隊負責人一覽</div>
+    <div class="product-card">
+      <table class="team-table">
+        <thead>
+          <tr><th>成員</th><th>角色</th><th>主要負責範圍</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Maki</strong></td><td>PM / 運維 / 音效 / QA</td><td>基礎建設、文檔規劃、音效製作、QA 流程、全產品對接</td></tr>
+          <tr><td><strong>Johnny</strong></td><td>前端工程師</td><td>換皮流程、Loading、速度優化（SUPERACE / 皇家帝國 / 十二宮）</td></tr>
+          <tr><td><strong>Sammy</strong></td><td>後端工程師</td><td>錢包、報表、RTP、水池、任務模組（SUPERACE / 皇家帝國）</td></tr>
+          <tr><td><strong>Ivy</strong></td><td>美術</td><td>十二宮水之星河、奢華2 Luxe2 2D 視覺</td></tr>
+          <tr><td><strong>Arm</strong></td><td>動效</td><td>全遊戲動效製作</td></tr>
+          <tr><td><strong>Nicole（外包）</strong></td><td>美術</td><td>摩羯座 2D 視覺｜對接 Maki</td></tr>
+          <tr><td><strong>優里（外包）</strong></td><td>音效</td><td>摩羯座音效｜對接 Ivy</td></tr>
+          <tr><td><strong>SEVEN（外包）</strong></td><td>美術</td><td>雙魚夢境 2D 視覺｜對接 Maki</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- TEST LINKS -->
+  <div class="section">
+    <div class="section-title">可測試連結</div>
+    <div class="links-grid">
+      <a class="link-card" href="https://dev-goldslots-original.fuyuit.tw/?ssoKey=test003" target="_blank">
+        <div class="link-icon" style="background:#78350f33; color:#fbbf24">🎰</div>
+        <div><div class="link-name">GoldSlots（迪亞勇士）</div><div class="link-url">dev-goldslots-original.fuyuit.tw</div></div>
+      </a>
+      <a class="link-card" href="https://dev-superace-original.fuyuit.tw/?ssoKey=test003" target="_blank">
+        <div class="link-icon" style="background:#1e3a5f33; color:#60a5fa">♠️</div>
+        <div><div class="link-name">SUPERACE</div><div class="link-url">dev-superace-original.fuyuit.tw</div></div>
+      </a>
+      <a class="link-card" href="https://dev-pisces-original.fuyuit.tw/?ssoKey=test003" target="_blank">
+        <div class="link-icon" style="background:#0c4a6e33; color:#38bdf8">🐟</div>
+        <div><div class="link-name">Pisces（水之星河）</div><div class="link-url">dev-pisces-original.fuyuit.tw</div></div>
+      </a>
+      <a class="link-card" href="https://dev-aquarius-original.fuyuit.tw/?ssoKey=test003" target="_blank">
+        <div class="link-icon" style="background:#3b276033; color:#a78bfa">🏺</div>
+        <div><div class="link-name">Aquarius（摩羯座）</div><div class="link-url">dev-aquarius-original.fuyuit.tw</div></div>
+      </a>
+      <a class="link-card" href="https://demo-web.fuyuit.tw/#" target="_blank">
+        <div class="link-icon" style="background:#06474733; color:#34d399">🌐</div>
+        <div><div class="link-name">品牌官網</div><div class="link-url">demo-web.fuyuit.tw</div></div>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Fuyuit 內部文件｜股東大會 2026-04-10｜依最新工作追蹤表更新
+</footer>
+
+</body>
+</html>
