@@ -87,6 +87,46 @@
 
   .divider { height: 1px; background: #0f1117; margin: 12px 0; }
   footer { text-align: center; color: #334155; font-size: 12px; padding: 40px; border-top: 1px solid #1e293b; }
+
+  /* Product Selector Layout */
+  .prod-layout { display: flex; gap: 20px; align-items: flex-start; }
+  .prod-sidebar { width: 210px; flex-shrink: 0; display: flex; flex-direction: column; gap: 8px; }
+  @media(max-width:700px){ .prod-layout{flex-direction:column;} .prod-sidebar{width:100%;flex-direction:row;flex-wrap:wrap;} }
+  .prod-btn {
+    width: 100%; background: #1e293b; border: 1px solid #2d3748; border-radius: 12px;
+    padding: 12px 14px; text-align: left; cursor: pointer; transition: border-color .2s, background .2s;
+    color: inherit; font-family: inherit;
+  }
+  .prod-btn:hover { border-color: #475569; background: #243044; }
+  .prod-btn.active { border-color: #6c63ff; background: #1e293b55; box-shadow: 0 0 0 1px #6c63ff33 inset; }
+  .prod-btn-top { display: flex; align-items: center; gap: 8px; margin-bottom: 2px; }
+  .prod-btn-icon { font-size: 15px; }
+  .prod-btn-name { font-size: 13px; font-weight: 700; color: #e2e8f0; }
+  .prod-btn-sub { font-size: 10px; color: #475569; margin-bottom: 7px; padding-left: 23px; }
+  .prod-mini-bar-wrap { height: 4px; background: #0f1117; border-radius: 2px; overflow: hidden; margin-bottom: 7px; }
+  .prod-mini-bar { height: 100%; border-radius: 2px; transition: width .8s cubic-bezier(.4,0,.2,1); }
+  .prod-btn-foot { display: flex; justify-content: space-between; align-items: center; }
+  .prod-detail { flex: 1; min-width: 0; background: #1e293b; border: 1px solid #2d3748; border-radius: 14px; padding: 20px 24px; }
+  .prod-pane { display: none; }
+  .prod-pane.active { display: block; }
+  .prod-header-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 0 0 16px; margin-bottom: 16px; border-bottom: 1px solid #2d3748; }
+  .anim-bar-wrap { height: 8px; background: #0f1117; border-radius: 4px; overflow: hidden; margin: 6px 0 4px; }
+  .anim-bar { height: 100%; border-radius: 4px; width: 0%; transition: width .9s cubic-bezier(.4,0,.2,1), background .5s ease; }
+  .dept-pct-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .dept-pct { font-size: 12px; font-weight: 700; color: #94a3b8; min-width: 34px; }
+
+  .tab-wrap { margin-bottom: 48px; }
+  .tab-bar { display: flex; gap: 4px; margin-bottom: 24px; border-bottom: 1px solid #2d3748; padding-bottom: 0; }
+  .tab-btn {
+    padding: 10px 24px; font-size: 14px; font-weight: 600; border: none; background: none;
+    color: #64748b; cursor: pointer; border-bottom: 3px solid transparent;
+    margin-bottom: -1px; transition: color 0.2s, border-color 0.2s; font-family: inherit;
+    border-radius: 6px 6px 0 0;
+  }
+  .tab-btn:hover { color: #94a3b8; }
+  .tab-btn.active { color: #a78bfa; border-bottom-color: #6c63ff; background: #6c63ff0d; }
+  .tab-pane { display: none; }
+  .tab-pane.active { display: block; }
 </style>
 </head>
 <body>
@@ -365,10 +405,20 @@
     </div>
   </div>
 
-  <!-- PRODUCTS -->
-  <div class="section">
-    <div class="section-title">產品進度</div>
-    <div class="product-grid">
+  <!-- TABBED: PRODUCTS + PM -->
+  <div class="tab-wrap">
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('products')">產品進度</button>
+      <button class="tab-btn" onclick="switchTab('pm')">PM 規劃文件總覽</button>
+    </div>
+
+    <div id="tab-products" class="tab-pane active">
+  <div class="prod-layout">
+    <div id="prod-sidebar" class="prod-sidebar"></div>
+    <div id="prod-detail" class="prod-detail"></div>
+  </div>
+  <div style="display:none" id="legacy-products-start">LEGACY_START</div>
+    <div class="product-grid" style="display:none">
 
       <!-- GoldSlots 皇家帝國 -->
       <div class="product-card">
@@ -692,11 +742,12 @@
         </div>
       </div>
 
-    </div>
-  </div>
+    </div><!-- /legacy product-grid -->
 
-  <!-- PM FUTURE PLANS -->
-  <div class="section">
+    </div><!-- /tab-products -->
+
+    <div id="tab-pm" class="tab-pane">
+  <div class="section" style="margin-bottom:0">
     <div class="section-title">PM 規劃文件總覽</div>
     <div class="product-grid">
 
@@ -807,17 +858,9 @@
 
     </div>
   </div>
+    </div><!-- /tab-pm -->
 
-  <!-- BLOCKER -->
-  <div class="section">
-    <div class="section-title">🚨 待解決卡點</div>
-    <div class="blocker-list">
-      <div class="blocker-item">
-        <div class="title">UAT / PRO 環境部署缺乏專業運維團隊</div>
-        <div class="desc">所有產品目前均只有 DEV 環境就緒。UAT / PRO 是進入正式上線的主要瓶頸，需補充專業運維人力。此問題影響全部遊戲線。</div>
-      </div>
-    </div>
-  </div>
+  </div><!-- /tab-wrap -->
 
   <!-- TEAM -->
   <div class="section">
@@ -830,8 +873,8 @@
         <tbody>
           <tr><td><strong>Maki</strong></td><td>PM / 運維 / 音效 / QA</td><td>基礎建設、文檔規劃、音效製作、QA 流程、全產品對接</td></tr>
           <tr><td><strong>Johnny</strong></td><td>前端工程師</td><td>換皮流程、Loading、速度優化（SUPERACE / 皇家帝國 / 十二宮）</td></tr>
-          <tr><td><strong>Sammy</strong></td><td>後端工程師</td><td>錢包、報表、RTP、水池、任務模組（SUPERACE / 皇家帝國）</td></tr>
-          <tr><td><strong>Ivy</strong></td><td>美術</td><td>十二宮水之星河、奢華2 Luxe2 2D 視覺</td></tr>
+          <tr><td><strong>Sammy</strong></td><td>後端工程師</td><td>錢包、報表、RTP、水池、任務模組（SUPERACE / 皇家帝國）、對外平台接入溝通</td></tr>
+          <tr><td><strong>Ivy</strong></td><td>美術</td><td>十二宮水之星河、奢華2 Luxe2 2D 視覺、美術圖版面定規、美術 SOP 建置</td></tr>
           <tr><td><strong>Arm</strong></td><td>動效</td><td>全遊戲動效製作</td></tr>
           <tr><td><strong>Nicole（外包）</strong></td><td>美術</td><td>摩羯座 2D 視覺｜對接 Maki</td></tr>
           <tr><td><strong>優里（外包）</strong></td><td>音效</td><td>摩羯座音效｜對接 Ivy</td></tr>
@@ -841,38 +884,194 @@
     </div>
   </div>
 
-  <!-- TEST LINKS -->
-  <div class="section">
-    <div class="section-title">可測試連結</div>
-    <div class="links-grid">
-      <a class="link-card" href="https://dev-goldslots-original.fuyuit.tw/?ssoKey=test003" target="_blank">
-        <div class="link-icon" style="background:#78350f33; color:#fbbf24">🎰</div>
-        <div><div class="link-name">GoldSlots（迪亞勇士）</div><div class="link-url">dev-goldslots-original.fuyuit.tw</div></div>
-      </a>
-      <a class="link-card" href="https://dev-superace-original.fuyuit.tw/?ssoKey=test003" target="_blank">
-        <div class="link-icon" style="background:#1e3a5f33; color:#60a5fa">♠️</div>
-        <div><div class="link-name">SUPERACE</div><div class="link-url">dev-superace-original.fuyuit.tw</div></div>
-      </a>
-      <a class="link-card" href="https://dev-pisces-original.fuyuit.tw/?ssoKey=test003" target="_blank">
-        <div class="link-icon" style="background:#0c4a6e33; color:#38bdf8">🐟</div>
-        <div><div class="link-name">Pisces（水之星河）</div><div class="link-url">dev-pisces-original.fuyuit.tw</div></div>
-      </a>
-      <a class="link-card" href="https://dev-aquarius-original.fuyuit.tw/?ssoKey=test003" target="_blank">
-        <div class="link-icon" style="background:#3b276033; color:#a78bfa">🏺</div>
-        <div><div class="link-name">Aquarius（摩羯座）</div><div class="link-url">dev-aquarius-original.fuyuit.tw</div></div>
-      </a>
-      <a class="link-card" href="https://demo-web.fuyuit.tw/#" target="_blank">
-        <div class="link-icon" style="background:#06474733; color:#34d399">🌐</div>
-        <div><div class="link-name">品牌官網</div><div class="link-url">demo-web.fuyuit.tw</div></div>
-      </a>
-    </div>
-  </div>
 
 </div>
 
 <footer>
   Fuyuit 內部文件｜股東大會 2026-04-10｜依最新工作追蹤表更新
 </footer>
+
+<script>
+  function switchTab(name) {
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+
+  /* ── Product Selector ── */
+  const PRODUCTS = [
+    {
+      id:'dia', icon:'🎰', name:'迪亞勇士', sub:'Dia Warrior', arch:'皇家帝國架構',
+      color:'#fbbf24', tag:'DEV 上線中', tagClass:'tag-dev', overall:66,
+      depts:[
+        {label:'PM', person:'Maki', pct:100, note:'所有 PM 文件全部完成',
+          items:[['si-done','原架構整理'],['si-done','換皮文檔 ×7'],['si-done','登入/房間規劃'],['si-done','RTP 規劃'],['si-done','水池規劃'],['si-done','任務規劃']]},
+        {label:'後端', person:'Sammy', pct:50,
+          items:[['si-done','水池模組'],['si-wip','錢包接入 80%'],['si-wip','報表系統 60%'],['si-wip','RTP 實作 80%'],['si-todo','登入/房間邏輯'],['si-todo','新手任務'],['si-todo','成就任務']]},
+        {label:'前端', person:'Johnny', pct:35,
+          items:[['si-wip','快速換皮流程 60%'],['si-wip','Loading 更換 20%'],['si-todo','登入/房間介面'],['si-todo','任務介面']]},
+        {label:'音效', person:'Maki', pct:95,
+          items:[['si-done','主題音效換皮'],['si-done','BGM/SFX 規格'],['si-done','音效整合流程'],['si-wip','AI 生成流程 90%']]},
+        {label:'QA', person:'Maki', pct:80,
+          items:[['si-wip','AI QA 製作 80%'],['si-wip','自主訓練機制 80%']]},
+        {label:'運維', pct:33, warn:'⚠️ UAT / PRO 需專業運維'},
+      ]
+    },
+    {
+      id:'poker', icon:'♠️', name:'樸克王國', sub:'POKER Kingdom', arch:'SuperAce 架構',
+      color:'#60a5fa', tag:'DEV 上線中', tagClass:'tag-dev', overall:72,
+      depts:[
+        {label:'PM', person:'Maki', pct:100, note:'所有 PM 文件全部完成',
+          items:[['si-done','原架構整理'],['si-done','換皮文檔 ×4'],['si-done','登入/房間規劃'],['si-done','任務規劃 ✅NEW'],['si-done','RTP 規劃'],['si-done','水池規劃']]},
+        {label:'後端', person:'Sammy', pct:63,
+          items:[['si-done','水池模組'],['si-done','免費遊戲/Scatter ✅解決'],['si-wip','錢包接入 80%'],['si-wip','報表系統 60%'],['si-wip','RTP 模擬 80%'],['si-new','登入/房間 40% 🆕'],['si-new','新手任務 10% 🆕'],['si-todo','成就任務']]},
+        {label:'前端', person:'Johnny', pct:43,
+          items:[['si-wip','速度/介面優化 90%'],['si-wip','快速換皮流程 60%'],['si-wip','Loading 更換 20%'],['si-todo','登入/房間介面'],['si-todo','任務介面']]},
+        {label:'QA', person:'Maki', pct:100,
+          items:[['si-done','AI QA 製作'],['si-done','QA 報告'],['si-done','自主訓練 ✅ L1 完成']]},
+        {label:'音效', person:'Maki', pct:95,
+          items:[['si-done','主題音效換皮'],['si-done','BGM/SFX 規格'],['si-done','音效整合流程'],['si-wip','AI 生成流程 90%']]},
+        {label:'運維', pct:33, warn:'⚠️ UAT / PRO 需專業運維'},
+      ]
+    },
+    {
+      id:'aquarius', icon:'🐟', name:'水之星河', sub:'Aquarius（十二宮）', arch:'皇家帝國換皮',
+      color:'#38bdf8', tag:'美術進行中', tagClass:'tag-wip', overall:46,
+      depts:[
+        {label:'美術', person:'Ivy（內部）', pct:53,
+          items:[['si-wip','2D 視覺 70%（轉場&結算精稿中）'],['si-wip','角色拆圖 80%'],['si-wip','共用元件 10%']]},
+        {label:'動效', person:'Arm', pct:50, note:'動效製作進行中'},
+        {label:'前端', person:'Johnny', pct:40, note:'換皮實作'},
+        {label:'音效', person:'Maki', pct:70, note:'部分音效需微調'},
+        {label:'運維 / QA', pct:16, note:'運維前端 DEV 33%｜QA 待開始'},
+      ]
+    },
+    {
+      id:'capricorn', icon:'🏺', name:'摩羯座', sub:'Capricorn（十二宮）', arch:'皇家帝國換皮',
+      color:'#a78bfa', tag:'美術進行中', tagClass:'tag-wip', overall:41,
+      depts:[
+        {label:'美術', person:'外包 Nicole｜對接 Maki', pct:40, note:'2D 視覺｜尚未定稿',
+          items:[['note-tag','📌 待定稿後進入換皮流程']]},
+        {label:'音效', person:'外包 優里｜對接 Ivy', pct:70, note:'需求溝通完畢進行中'},
+        {label:'運維 / QA / 前端 / 動效', pct:13, note:'運維 DEV 33%｜QA 20%｜前端/動效 待開始'},
+      ]
+    },
+    {
+      id:'pisces', icon:'🌙', name:'雙魚夢境', sub:'Pisces（十二宮）', arch:'皇家帝國換皮',
+      color:'#6ee7b7', tag:'最快可進入換皮', tagClass:'tag-wip', overall:40,
+      depts:[
+        {label:'美術', person:'外包 SEVEN｜對接 Maki', pct:80,
+          items:[['done-tag','✅ 已定稿，只差拆圖']]},
+        {label:'音效', person:'Maki', pct:70, note:'部分音效需微調'},
+        {label:'前端', person:'Johnny', pct:20, note:'換皮實作進行中'},
+        {label:'動效', person:'Arm', pct:0},
+        {label:'運維 / QA', pct:11, note:'運維 DEV 33%｜QA 待開始'},
+      ]
+    },
+    {
+      id:'luxe2', icon:'💎', name:'奢華2 Luxe2', sub:'SuperAce 換皮', arch:'',
+      color:'#f59e0b', tag:'美術剛啟動', tagClass:'tag-wip', overall:5,
+      depts:[
+        {label:'美術', person:'Ivy（內部）｜對接 Maki', pct:10, note:'2D 視覺｜已定稿，只差拆圖'},
+        {label:'動效 / 前端 / QA / 運維 / 音效', pct:0, note:'全部待開始（等美術素材到位）'},
+      ]
+    },
+  ];
+
+  function barGradient(pct) {
+    if (pct === 0) return '#334155';
+    if (pct <= 30) return 'linear-gradient(90deg,#7f1d1d,#f87171)';
+    if (pct <= 60) return 'linear-gradient(90deg,#78350f,#fbbf24)';
+    if (pct <= 85) return 'linear-gradient(90deg,#1e3a5f,#60a5fa)';
+    return 'linear-gradient(90deg,#065f46,#34d399)';
+  }
+
+  function animateBars(pane) {
+    pane.querySelectorAll('.anim-bar').forEach(bar => {
+      bar.style.width = '0%';
+      bar.style.background = '#334155';
+    });
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      pane.querySelectorAll('.anim-bar').forEach(bar => {
+        const pct = parseInt(bar.dataset.pct) || 0;
+        bar.style.width = pct + '%';
+        bar.style.background = barGradient(pct);
+      });
+    }));
+  }
+
+  function selectProduct(id) {
+    document.querySelectorAll('.prod-pane').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.prod-btn').forEach(b => b.classList.remove('active'));
+    const pane = document.getElementById('prod-' + id);
+    pane.classList.add('active');
+    document.querySelector(`.prod-btn[data-id="${id}"]`).classList.add('active');
+    animateBars(pane);
+  }
+
+  function renderProducts() {
+    const sidebar = document.getElementById('prod-sidebar');
+    const detail  = document.getElementById('prod-detail');
+    if (!sidebar || !detail) return;
+
+    sidebar.innerHTML = PRODUCTS.map(p => `
+      <button class="prod-btn" data-id="${p.id}" onclick="selectProduct('${p.id}')">
+        <div class="prod-btn-top">
+          <span class="prod-btn-icon">${p.icon}</span>
+          <span class="prod-btn-name" style="color:${p.color}">${p.name}</span>
+        </div>
+        <div class="prod-btn-sub">${p.sub}</div>
+        <div class="prod-mini-bar-wrap">
+          <div class="prod-mini-bar" style="width:${p.overall}%;background:${barGradient(p.overall)}"></div>
+        </div>
+        <div class="prod-btn-foot">
+          <span class="product-tag ${p.tagClass}" style="font-size:10px">${p.tag}</span>
+          <span style="font-size:11px;color:#64748b;font-weight:600">${p.overall}%</span>
+        </div>
+      </button>
+    `).join('');
+
+    detail.innerHTML = PRODUCTS.map(p => {
+      const deptRows = p.depts.map(d => {
+        const badge = d.items ? d.items.map(([cls,txt]) =>
+          `<span class="sub-item ${cls}">${txt}</span>`).join('') : '';
+        const note = d.note ? `<span style="font-size:11px;color:#64748b">${d.note}</span>` : '';
+        const warn = d.warn ? `<span class="warn-tag" style="font-size:11px">${d.warn}</span>` : '';
+        const personLabel = d.person ? `<span>${d.person}</span>` : '';
+        return `
+          <div class="dept-row">
+            <div class="dept-label">${d.label} ${personLabel}</div>
+            <div class="anim-bar-wrap"><div class="anim-bar" data-pct="${d.pct}"></div></div>
+            <div class="dept-pct-row"><span class="dept-pct">${d.pct}%</span>${note}${warn}</div>
+            ${badge ? `<div class="sub-items">${badge}</div>` : ''}
+          </div>
+          <div class="divider"></div>`;
+      }).join('');
+
+      return `
+        <div id="prod-${p.id}" class="prod-pane">
+          <div class="prod-header-row">
+            <div>
+              <div style="font-size:19px;font-weight:700;color:${p.color}">${p.icon} ${p.name}（${p.sub}）</div>
+              ${p.arch ? `<div style="font-size:12px;color:#64748b;margin-top:3px">${p.arch}</div>` : ''}
+            </div>
+            <span class="product-tag ${p.tagClass}">${p.tag}</span>
+          </div>
+          ${deptRows}
+        </div>`;
+    }).join('');
+
+    // activate first
+    const first = PRODUCTS[0];
+    document.querySelector(`.prod-btn[data-id="${first.id}"]`).classList.add('active');
+    const firstPane = document.getElementById('prod-' + first.id);
+    firstPane.classList.add('active');
+    setTimeout(() => animateBars(firstPane), 100);
+  }
+
+  document.addEventListener('DOMContentLoaded', renderProducts);
+</script>
 
 </body>
 </html>
