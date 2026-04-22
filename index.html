@@ -2,7 +2,7 @@
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
-<title>工作進度報告 | 股東大會 2026-04-16</title>
+<title>工作進度報告 | 股東大會 2026-04-22</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; background: #0f1117; color: #e2e8f0; }
@@ -939,7 +939,7 @@
   const PRODUCTS = [
     {
       id:'dia', icon:'🎰', name:'迪亞勇士', sub:'Dia Warrior', arch:'皇家帝國架構',
-      color:'#fbbf24', tag:'DEV 上線中', tagClass:'tag-dev', overall:80,
+      color:'#fbbf24', tag:'DEV+UAT 上線中', tagClass:'tag-dev', overall:85,
       depts:[
         {label:'PM', person:'Maki', pct:93, note:'僅新手/成就任務規劃進行中',
           items:[['si-done','原架構整理'],['si-done','換皮文檔 ×7'],['si-done','登入/房間規劃'],['si-done','RTP 規劃'],['si-done','水池規劃'],['si-wip','新手/成就任務 60%']]},
@@ -951,12 +951,13 @@
           items:[['si-done','主題音效換皮'],['si-done','BGM/SFX 規格'],['si-done','AI 生成流程 ✅'],['si-done','音效整合流程']]},
         {label:'QA', person:'Maki', pct:100,
           items:[['si-done','AI QA 製作 ✅'],['si-done','自主訓練機制 ✅']]},
-        {label:'運維', pct:33, warn:'⚠️ UAT / PRO 需專業運維'},
+        {label:'運維', pct:66, note:'DEV ✅ UAT ✅ 4/21部署完成｜PRO 待排',
+          items:[['si-done','DEV 環境'],['si-done','UAT 後端+前端 4/21 NEW'],['si-todo','PRO 環境']]},
       ]
     },
     {
       id:'poker', icon:'♠️', name:'樸克王國', sub:'POKER Kingdom', arch:'SuperAce 架構',
-      color:'#60a5fa', tag:'DEV 上線中', tagClass:'tag-dev', overall:78,
+      color:'#60a5fa', tag:'DEV+UAT 上線中', tagClass:'tag-dev', overall:82,
       depts:[
         {label:'PM', person:'Maki', pct:100, note:'所有 PM 文件全部完成',
           items:[['si-done','原架構整理'],['si-done','換皮文檔 ×4'],['si-done','登入/房間規劃'],['si-done','新手/成就任務規劃'],['si-done','RTP 規劃'],['si-done','水池規劃']]},
@@ -968,12 +969,13 @@
           items:[['si-done','AI QA 製作'],['si-done','QA 報告'],['si-done','自主訓練 ✅ L1 完成']]},
         {label:'音效', person:'Maki', pct:100,
           items:[['si-done','主題音效換皮'],['si-done','BGM/SFX 規格'],['si-done','AI 生成流程 ✅'],['si-done','音效整合流程']]},
-        {label:'運維', pct:33, warn:'⚠️ UAT / PRO 需專業運維'},
+        {label:'運維', pct:66, note:'DEV ✅ UAT ✅｜PRO 待排',
+          items:[['si-done','DEV 環境'],['si-done','UAT 環境'],['si-todo','PRO 環境']]},
       ]
     },
     {
       id:'aquarius', icon:'🐟', name:'水之星河', sub:'Aquarius（十二宮）', arch:'皇家帝國換皮',
-      color:'#38bdf8', tag:'美術接近完成', tagClass:'tag-dev', overall:74,
+      color:'#38bdf8', tag:'UAT 已上線', tagClass:'tag-dev', overall:80,
       depts:[
         {label:'美術', person:'Ivy（內部）', pct:93,
           items:[['si-done','2D 視覺（轉場&結算）✅'],['si-done','角色拆圖 ✅'],['si-wip','共用元件 80%']]},
@@ -982,8 +984,10 @@
         {label:'前端', person:'Johnny', pct:70, note:'換皮實作進行中'},
         {label:'音效', person:'Maki', pct:100,
           items:[['si-done','Audio_3 全套 ✅'],['si-done','自訂 SFX（symbol落定+水球發射）✅ NEW']]},
-        {label:'QA', person:'Maki', pct:100, note:'自動前端掃描 ✅'},
-        {label:'運維', pct:33, warn:'⚠️ UAT / PRO 需專業運維'},
+        {label:'QA', person:'Maki', pct:100,
+          items:[['si-done','自動前端掃描 ✅'],['si-done','百萬轉 RTP 模擬 50.9% NEW'],['si-done','Google Sheet 中文報告 NEW'],['si-done','7 scatter=14 FG spin play 驗證 NEW']]},
+        {label:'運維', pct:66, note:'DEV ✅ UAT ✅ 4/21 部署｜PRO 待排',
+          items:[['si-done','DEV 環境'],['si-done','UAT 後端+前端 4/21 NEW'],['si-todo','PRO 環境']]},
       ]
     },
     {
